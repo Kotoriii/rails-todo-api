@@ -26,3 +26,123 @@ Migrating to CreateItems (20170427154431)
             FROM sqlite_temp_master
             WHERE name='index_items_on_todo_id' AND type='index'
 [0m
+Started GET "/todos" for ::1 at 2017-05-04 10:17:48 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (14.8ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+Completed 200 OK in 33ms (Views: 1.6ms | ActiveRecord: 15.2ms)
+
+
+Started POST "/todos" for ::1 at 2017-05-04 10:19:51 -0600
+Processing by TodosController#create as JSON
+  Parameters: {"title"=>"Blink182", "created_by"=>"1", "todo"=>{"title"=>"Blink182", "created_by"=>"1"}}
+Unpermitted parameter: todo
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (52.0ms)[0m  [1m[32mINSERT INTO "todos" ("title", "created_by", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "Blink182"], ["created_by", "1"], ["created_at", 2017-05-04 16:19:52 UTC], ["updated_at", 2017-05-04 16:19:52 UTC]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Completed 201 Created in 62ms (Views: 0.7ms | ActiveRecord: 53.9ms)
+
+
+Started PUT "/todos/1" for ::1 at 2017-05-04 10:20:09 -0600
+Processing by TodosController#update as JSON
+  Parameters: {"title"=>"Sum41", "id"=>"1", "todo"=>{"title"=>"Sum41"}}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameters: id, todo
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "todos" SET "title" = ?, "updated_at" = ? WHERE "todos"."id" = ?[0m  [["title", "Sum41"], ["updated_at", 2017-05-04 16:20:09 UTC], ["id", 1]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Completed 204 No Content in 53ms (ActiveRecord: 1.9ms)
+
+
+Started DELETE "/todos/1" for ::1 at 2017-05-04 10:20:38 -0600
+Processing by TodosController#destroy as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mItem Load (9.3ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = ?[0m  [["todo_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "todos" WHERE "todos"."id" = ?[0m  [["id", 1]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Completed 204 No Content in 75ms (ActiveRecord: 11.3ms)
+
+
+Started GET "/todos/2/items" for ::1 at 2017-05-04 10:32:45 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ItemsController#index as */*
+  Parameters: {"todo_id"=>"2"}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Completed 404 Not Found in 9ms (Views: 0.4ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/todos/2/items" for ::1 at 2017-05-04 10:33:04 -0600
+Processing by ItemsController#create as JSON
+  Parameters: {"name"=>"Listen to 5th Symphony", "done"=>"false", "todo_id"=>"2", "item"=>{"name"=>"Listen to 5th Symphony", "done"=>"false"}}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (Views: 0.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/todos" for ::1 at 2017-05-04 10:34:13 -0600
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.1ms)
+
+
+Started POST "/todos" for ::1 at 2017-05-04 10:34:26 -0600
+Processing by TodosController#create as JSON
+  Parameters: {"title"=>"Blink182", "created_by"=>"1", "todo"=>{"title"=>"Blink182", "created_by"=>"1"}}
+Unpermitted parameter: todo
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "todos" ("title", "created_by", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "Blink182"], ["created_by", "1"], ["created_at", 2017-05-04 16:34:26 UTC], ["updated_at", 2017-05-04 16:34:26 UTC]]
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+Completed 201 Created in 13ms (Views: 0.6ms | ActiveRecord: 5.8ms)
+
+
+Started GET "/todos/2/items" for ::1 at 2017-05-04 10:34:35 -0600
+Processing by ItemsController#index as */*
+  Parameters: {"todo_id"=>"2"}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mItem Load (0.2ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = ?[0m  [["todo_id", 2]]
+Completed 200 OK in 11ms (Views: 1.2ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/todos/2/items" for ::1 at 2017-05-04 10:34:47 -0600
+Processing by ItemsController#create as JSON
+  Parameters: {"name"=>"Listen to 5th Symphony", "done"=>"false", "todo_id"=>"2", "item"=>{"name"=>"Listen to 5th Symphony", "done"=>"false"}}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Unpermitted parameters: todo_id, item
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "items" ("name", "done", "todo_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Listen to 5th Symphony"], ["done", false], ["todo_id", 2], ["created_at", 2017-05-04 16:34:48 UTC], ["updated_at", 2017-05-04 16:34:48 UTC]]
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+Completed 201 Created in 18ms (Views: 0.6ms | ActiveRecord: 6.2ms)
+
+
+Started PUT "/todos/2/items/1" for ::1 at 2017-05-04 10:35:08 -0600
+Processing by ItemsController#update as JSON
+  Parameters: {"done"=>"true", "todo_id"=>"2", "id"=>"1", "item"=>{"done"=>"true"}}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mItem Load (0.1ms)[0m  [1m[34mSELECT  "items".* FROM "items" WHERE "items"."todo_id" = ? AND "items"."id" = ? LIMIT ?[0m  [["todo_id", 2], ["id", 1], ["LIMIT", 1]]
+Unpermitted parameters: todo_id, id, item
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "items" SET "done" = ?, "updated_at" = ? WHERE "items"."id" = ?[0m  [["done", true], ["updated_at", 2017-05-04 16:35:08 UTC], ["id", 1]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Completed 204 No Content in 7ms (ActiveRecord: 2.1ms)
+
+
+Started GET "/todos/2/items" for ::1 at 2017-05-04 10:35:13 -0600
+Processing by ItemsController#index as */*
+  Parameters: {"todo_id"=>"2"}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mItem Load (0.1ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = ?[0m  [["todo_id", 2]]
+Completed 200 OK in 3ms (Views: 1.2ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/todos/2/items/1" for ::1 at 2017-05-04 10:35:42 -0600
+Processing by ItemsController#destroy as */*
+  Parameters: {"todo_id"=>"2", "id"=>"1"}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT  "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mItem Load (0.1ms)[0m  [1m[34mSELECT  "items".* FROM "items" WHERE "items"."todo_id" = ? AND "items"."id" = ? LIMIT ?[0m  [["todo_id", 2], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "items" WHERE "items"."id" = ?[0m  [["id", 1]]
+  [1m[35m (5.2ms)[0m  [1m[36mcommit transaction[0m
+Completed 204 No Content in 9ms (ActiveRecord: 5.7ms)
+
+
